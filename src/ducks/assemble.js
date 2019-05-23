@@ -144,4 +144,6 @@ assemble.selectors.getFiltered = createSelector(
 	}
 );
 
+export default assemble;
+
 
