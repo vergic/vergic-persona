@@ -83,22 +83,20 @@ const getNewColumns = (nbrOfColumns, maxWidth, maxHeight, patterns) => Array(nbr
 /**
  *
  * @param state
- * @param action payload = imageData, width, height
+ * @param action payload = imageData
  */
 const init = (state, action) => {
-	const {imageData, width, height} = action.payload;
-	state.imageWidth = width;
-	state.imageHeight = height;
+	const imageData = action.payload.imageData;
 
 	// init patterns
-	state.patterns = [pattern.newCirclePattern('circle', width), pattern.newBarPattern('bar', width)];
+	state.patterns = [pattern.newCirclePattern('circle', state.imageWidth), pattern.newBarPattern('bar', state.imageWidth)];
 
 	// init new columns
-	const nbrOfColumns = Math.ceil(action.payload.width / state.patternWidth);
-	const columns = getNewColumns(nbrOfColumns, width, height, state.patterns);
+	const nbrOfColumns = Math.ceil(state.imageWidth / state.patternWidth);
+	const columns = getNewColumns(nbrOfColumns, state.imageWidth, state.imageHeight, state.patterns);
 
 	// set color
-	state.columns = getRgbColumns(columns, state.patterns, width, height, imageData);
+	state.columns = getRgbColumns(columns, state.patterns, state.imageWidth, state.imageHeight, imageData);
 };
 
 const thresholdFunction = (color, threshold) => {
@@ -130,6 +128,9 @@ const setImageDimensions = (state, action) => {
 	state.imageHeight = action.payload.height;
 };
 
+const setThreshold = (state, action) => {
+	state.threshold = action.payload;
+};
 
 export const assemble = createSlice({
 	slice: 'assemble',
@@ -139,6 +140,7 @@ export const assemble = createSlice({
 		updateWithThreshold,
 		togglePattern,
 		setImageDimensions,
+		setThreshold,
 	}
 });
 

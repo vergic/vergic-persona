@@ -4,6 +4,7 @@ import {bindActionCreators} from "redux";
 import {useSelector, shallowEqual} from 'react-redux'
 import Button from 'react-bootstrap/Button';
 import ImageContainer from './ImageContainer'
+import ThresholdSlider from './ThresholdSlider'
 import {assemble} from '../ducks/assemble'
 import {view} from '../ducks/view'
 import CanvasDraw from '../lib/CanvasDraw'
@@ -21,14 +22,19 @@ const Main = ({patterns, actions, columns}) => {
 	const [count, incrementCount] = useState(0);
 	const canvasDimensions = useSelector(assemble.selectors.getImageDimensions, shallowEqual);
 	useEffect(() => {
-		const canvas = canvasRef.current;
-		const ctx = canvas.getContext('2d');
-		ctx.canvas.width = canvasDimensions.imageWidth;
-		ctx.canvas.height = canvasDimensions.imageHeight;
-		const imageData = ctx.getImageData(0, 0, canvasDimensions.imageWidth, canvasDimensions.imageHeight);
 		console.log('use effect', canvasDimensions);
-		CanvasDraw.drawSingleColor(canvasDimensions.imageWidth, canvasDimensions.imageHeight, imageData.data);
+
+		const canvas = canvasRef.current;
+		const {imageWidth, imageHeight} = canvasDimensions;
+
+		const ctx = canvas.getContext('2d');
+		ctx.canvas.width = imageWidth;
+		ctx.canvas.height = imageHeight;
+
+		const imageData = ctx.getImageData(0, 0, imageWidth, imageHeight);
+		CanvasDraw.drawSingleColor(imageWidth, imageHeight, imageData.data);
 		ctx.putImageData(imageData, 0, 0);
+
 		return () => console.log('cleanup');
 	}, [count]);
 	// [columns] to trigger redraw
@@ -36,6 +42,7 @@ const Main = ({patterns, actions, columns}) => {
 	return (
 		<section>
 			<h1>test</h1>
+			<ThresholdSlider/>
 			<div className="main">
 				<ImageContainer url={blobUrl}/>
 				<canvas

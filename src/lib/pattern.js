@@ -4,7 +4,7 @@ const diameterRatio = innerDiameter / outerDiameter;
 
 const patternTemplate = {
 	id: 'id',
-	selected: false,
+	selected: true,
 	width: 0,
 	height: 0,
 	mask: [],
