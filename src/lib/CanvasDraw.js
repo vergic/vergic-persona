@@ -13,8 +13,7 @@ const fillRect = (width, height, imageData, rect, color) => {
 	}
 };
 
-const drawColumns = (imageWidth, imageHeight, imageData) => (dispatch, getState) => {
-	const columns = getState().columns;
+const drawColumns = (imageWidth, imageHeight, imageData, columns) => {
 	columns.forEach(column => column.forEach(cell => {
 		const rect = [cell.x0, cell.y0, cell.x1, cell.y1];
 		const color = cell.color;
@@ -22,7 +21,14 @@ const drawColumns = (imageWidth, imageHeight, imageData) => (dispatch, getState)
 	}));
 };
 
+const drawSingleColor = (imageWidth, imageHeight, imageData) => {
+	const rect = [0, 0, imageWidth, imageHeight];
+	fillRect(imageWidth, imageHeight, imageData, rect, [255, 0, 0, 255]);
+
+};
+
 export default {
 	drawColumns,
+	drawSingleColor
 };
 

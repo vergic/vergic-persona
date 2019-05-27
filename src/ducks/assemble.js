@@ -125,25 +125,31 @@ const updateWithThreshold = (state, action) => {
 	}));
 };
 
+const setImageDimensions = (state, action) => {
+	state.imageWidth = action.payload.width;
+	state.imageHeight = action.payload.height;
+};
 
-const assemble = createSlice({
+
+export const assemble = createSlice({
 	slice: 'assemble',
 	initialState,
 	reducers: {
 		init,
 		updateWithThreshold,
 		togglePattern,
+		setImageDimensions,
 	}
 });
 
-// not used
-assemble.selectors.getFiltered = createSelector(
-	['columns', 'threshold'],
-	(columns, threshold) => {
-		return columns.map(column => column.map(cell => thresholdFunction(cell.color, threshold)));
-	}
-);
+assemble.selectors = {
+	getImageDimensions: createSelector(
+		['assemble.imageWidth', 'assemble.imageHeight'],
+		(imageWidth, imageHeight) => {
+			return {imageWidth, imageHeight};
+		}
+	)
+};
 
-export default assemble;
 
 
