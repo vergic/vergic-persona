@@ -1,5 +1,6 @@
 import {createSlice, createSelector} from "redux-starter-kit";
 import pattern from "../lib/pattern";
+import CanvasDraw from '../lib/CanvasDraw'
 
 
 const togglePattern = (state, action) => {
@@ -51,7 +52,7 @@ const getRgbColumns = (columns, patterns, imageWidth, imageHeight, imageData) =>
 };
 
 const createColumn = (colIndex, maxWidth, maxHeight, patterns) => {
-	let a = [0];
+	let a = [];
 	let y0 = 0;
 	let y1 = 0;
 	const patternWidth = patterns[0].width;
@@ -73,45 +74,17 @@ const createColumn = (colIndex, maxWidth, maxHeight, patterns) => {
 		};
 		a.push(cell);
 		y0 = y1;
-		exitMax--;
+		// exitMax--;
 	}
 	return a;
 };
 
 const getNewColumns = (nbrOfColumns, maxWidth, maxHeight, patterns) => Array(nbrOfColumns).fill([]).map((emptyCol, colIndex) => createColumn(colIndex, maxWidth, maxHeight, patterns));
 
-/**
- *
- * @param state
- * @param action payload = imageData
- */
-const init = (state, action) => {
-	const imageData = action.payload.imageData;
-
-	// init patterns
-	state.patterns = [pattern.newCirclePattern('circle', state.imageWidth), pattern.newBarPattern('bar', state.imageWidth)];
-
-	// init new columns
-	const nbrOfColumns = Math.ceil(state.imageWidth / state.patternWidth);
-	const columns = getNewColumns(nbrOfColumns, state.imageWidth, state.imageHeight, state.patterns);
-
-	// set color
-	state.columns = getRgbColumns(columns, state.patterns, state.imageWidth, state.imageHeight, imageData);
-};
-
 const thresholdFunction = (color, threshold) => {
 	const colorSum = color[0] + color[1] + color[2];
 	const average = colorSum / 3;
 	return average < threshold;
-};
-
-const initialState = {
-	imageWidth: 0,
-	imageHeight: 0,
-	columns: [],
-	patternWidth: 0,
-	patterns: [],
-	threshold: 127
 };
 
 const updateWithThreshold = (state, action) => {
@@ -132,15 +105,35 @@ const setThreshold = (state, action) => {
 	state.threshold = action.payload;
 };
 
+const setColumns = (state, action) => {
+	state.columns = action.payload;
+};
+
+const initPatterns = (state, action) => {
+	const patternWidth = action.payload;
+	state.patterns = [pattern.newCirclePattern('circle', patternWidth), pattern.newBarPattern('bar', patternWidth)];
+};
+
+const initialState = {
+	imageWidth: 0,
+	imageHeight: 0,
+	columns: [],
+	patternWidth: 0,
+	patterns: [],
+	threshold: 127
+};
+
 export const assemble = createSlice({
 	slice: 'assemble',
 	initialState,
 	reducers: {
-		init,
+		// init,
 		updateWithThreshold,
 		togglePattern,
 		setImageDimensions,
 		setThreshold,
+		setColumns,
+		initPatterns,
 	}
 });
 
@@ -153,5 +146,30 @@ assemble.selectors = {
 	)
 };
 
+// Thunks
+export const initWithImageData = (imageData) => (dispatch, getState) => {
 
+	let state = getState().assemble;
+	const patternWidth = Math.round(state.imageWidth / 52);
+	dispatch(assemble.actions.initPatterns(patternWidth));
+
+	state = getState().assemble;
+	console.log('patterns', state.patterns)
+
+	const nbrOfColumns = Math.ceil(state.imageWidth / state.patterns[0].width);
+	let columns = getNewColumns(nbrOfColumns, state.imageWidth, state.imageHeight, state.patterns);
+	columns = getRgbColumns(columns, state.patterns, state.imageWidth, state.imageHeight, imageData);
+	dispatch(assemble.actions.setColumns(columns));
+};
+
+export const drawBlocksImage = (imageData) => (dispatch, getState) => {
+	const state = getState().assemble;
+	CanvasDraw.drawColumns(state.imageWidth, state.imageHeight, imageData, state.columns);
+};
+
+export const drawPatternImage = (imageData) => (dispatch, getState) => {
+	dispatch(assemble.actions.updateWithThreshold());
+	const state = getState().assemble;
+	CanvasDraw.drawPatternColumns(state.imageWidth, state.imageHeight, imageData, state.columns, state.patterns);
+};
 

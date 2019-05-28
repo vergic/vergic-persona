@@ -42,8 +42,8 @@ function FileDropZone() {
 			<input {...getInputProps()} />
 			{
 				isDragActive ?
-					<p>Drop the files here ...</p> :
-					<p>Drag 'n' drop some files here, or click to select files</p>
+					<p>Drop the image here ...</p> :
+					<p>Drag 'n' drop an image here, or click to select an image</p>
 			}
 			{progress === 'done'
 				? <ImageLoadedContainer url={blobUrl}/>

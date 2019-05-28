@@ -44,8 +44,7 @@ const newCirclePattern = (id, size) => {
 
 // Create Vergic bar pattern
 const newBarPattern = (id, size) => {
-	const height = Math.round((size / 2) * diameterRatio) + 2;
-	size += 2;
+	const height = Math.round(((size - 2) / 2) * diameterRatio);
 	const mask = Array(height).fill([]).map(empty => emptyRow(size))
 		.map((row, y) => row.map((val, x) => barCalc(x, y, size, height)));
 

@@ -8,7 +8,7 @@ const revokeBlobUrl = (url) => {
 
 
 export const initialState = {
-	view: 'start',
+	view: 'dropzone',
 	blobUrl: '',
 	imageWidth: 0,
 	imageHeight: 0,
