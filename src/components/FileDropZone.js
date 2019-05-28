@@ -46,6 +46,7 @@ function FileDropZone() {
 
 	return (
 		<div className="dropzone-container" {...getRootProps()}>
+			<h1>Vergic Person</h1>
 			<input {...getInputProps()} />
 			{
 				isDragActive ?

@@ -29,9 +29,9 @@ function App() {
 	return (
 		<div className="App">
 			{element}
-			<Button variant="primary" onClick={() => setView('start')}>Start</Button>
-			<Button variant="primary" onClick={() => setView('dropzone')}>Dropzone</Button>
-			<Button variant="primary" onClick={() => setView('main')}>Main</Button>
+			{/*<Button variant="primary" onClick={() => setView('start')}>Start</Button>*/}
+			{/*<Button variant="primary" onClick={() => setView('dropzone')}>Dropzone</Button>*/}
+			{/*<Button variant="primary" onClick={() => setView('main')}>Main</Button>*/}
 		</div>
 	);
 }
