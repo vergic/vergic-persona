@@ -61,11 +61,11 @@ const Main = () => {
 		<div className="main">
 			<Card className="card" bg="success" style={{width: '28rem'}}>
 				<ImageContainer url={blobUrl} id={'orig'} imageLoaded={imageLoaded}/>
-				<Card.Header>Header</Card.Header>
+				<Card.Header>Vergic Person</Card.Header>
 				<Card.Body>
-					<Card.Title>Vergic Person</Card.Title>
+					<Card.Title>Settings</Card.Title>
 					<Card.Text>
-						Make a vergic person. Click to generate
+						Drag slider to modify visibility
 					</Card.Text>
 					<ThresholdSlider drawPatterns={drawPatterns}/>
 					{/*<Button variant="primary" onClick={() => drawPatterns()}>Generate</Button>*/}

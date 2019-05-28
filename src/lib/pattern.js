@@ -42,16 +42,14 @@ const newCirclePattern = (id, size) => {
 		...patternTemplate,
 		id,
 		width: size,
-		height: size,
-		mask
+		height: size + 2,
+		mask: [emptyRow(size), ...mask, emptyRow(size)]
 	};
 };
 
 // Create Vergic bar pattern
 const newBarPattern = (id, size) => {
-	const thickness = outerDiameter - innerDiameter;
-	// const height = Math.round(((size) / 2) * diameterRatio);
-	const height = thickness;
+	const height = outerDiameter - innerDiameter;
 	const mask = Array(height).fill([]).map(empty => emptyRow(size))
 		.map((row, y) => row.map((val, x) => barCalc(x, y, size, height, 2)));
 
@@ -59,8 +57,8 @@ const newBarPattern = (id, size) => {
 		...patternTemplate,
 		id,
 		width: size,
-		height,
-		mask
+		height: height + 2,
+		mask: [emptyRow(size), ...mask, emptyRow(size)]
 	};
 };
 

@@ -35,7 +35,6 @@ function ThresholdSlider({drawPatterns}) {
 
 	return (
 		<div className="slider">
-			<p>Pattern threshold</p>
 			<Slider min={0} max={255} defaultValue={127} handle={handle}
 			        onAfterChange={(value) => setThreshold(value)}/>
 		</div>
