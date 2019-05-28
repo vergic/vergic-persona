@@ -1,5 +1,5 @@
 const outerDiameter = 25;
-const innerDiameter = 13;
+const innerDiameter = 12;//13;
 const diameterRatio = innerDiameter / outerDiameter;
 
 const patternTemplate = {
@@ -25,7 +25,12 @@ const circleCalc = (x, y, size) => {
 };
 
 // Vergic bar math function
-const barCalc = (x, y, w, h) => {
+const barCalc = (x, y, w, h, b) => {
+	return (x < b || y < b || x > w - b || y > h - b) ? 0 : 1;
+};
+
+// Vergic bar math function
+const _barCalc = (x, y, w, h) => {
 	return (x === 0 || y === 0 || x === w - 1 || y === h - 1) ? 0 : 1;
 };
 
@@ -44,9 +49,11 @@ const newCirclePattern = (id, size) => {
 
 // Create Vergic bar pattern
 const newBarPattern = (id, size) => {
-	const height = Math.round(((size - 2) / 2) * diameterRatio);
+	const thickness = outerDiameter - innerDiameter;
+	// const height = Math.round(((size) / 2) * diameterRatio);
+	const height = thickness;
 	const mask = Array(height).fill([]).map(empty => emptyRow(size))
-		.map((row, y) => row.map((val, x) => barCalc(x, y, size, height)));
+		.map((row, y) => row.map((val, x) => barCalc(x, y, size, height, 2)));
 
 	return {
 		...patternTemplate,

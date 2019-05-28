@@ -52,4 +52,12 @@ view.selectors = {
 };
 
 
+// Thunks
+export const restart = () => (dispatch, getState) => {
+	revokeBlobUrl(getState().view.blobUrl);
+	dispatch(view.actions.setView('dropzone'));
+};
+
+
+
 

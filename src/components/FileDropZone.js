@@ -3,6 +3,7 @@ import {useDispatch, useSelector, shallowEqual} from 'react-redux'
 import {useDropzone} from 'react-dropzone'
 import ImageLoadedContainer from './ImageLoadedContainer'
 import {view} from '../ducks/view'
+import {assemble} from '../ducks/assemble'
 
 const generateBlobUrl = (data, type = 'octet/stream') => {
 	const blob = new Blob([data], {type});
@@ -10,6 +11,12 @@ const generateBlobUrl = (data, type = 'octet/stream') => {
 };
 
 function FileDropZone() {
+
+	const setView = (v) => dispatch(view.actions.setView(v));
+
+	const imageLoaded = () => {
+		setView('main')
+	};
 
 	const dispatch = useDispatch();
 	const blobUrl = useSelector(view.selectors.getBlobUrl, shallowEqual);
@@ -46,7 +53,7 @@ function FileDropZone() {
 					<p>Drag 'n' drop an image here, or click to select an image</p>
 			}
 			{progress === 'done'
-				? <ImageLoadedContainer url={blobUrl}/>
+				? <ImageLoadedContainer url={blobUrl} imageLoaded={imageLoaded}/>
 				: null}
 		</div>
 	)

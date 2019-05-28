@@ -6,7 +6,6 @@ import {useDispatch, useSelector, shallowEqual} from 'react-redux'
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 
-import {view} from '../ducks/view'
 import {assemble} from '../ducks/assemble'
 
 const Handle = Slider.Handle;
@@ -27,13 +26,16 @@ const handle = (props) => {
 };
 
 
-function ThresholdSlider() {
+function ThresholdSlider({drawPatterns}) {
 	const dispatch = useDispatch();
-	const setThreshold = (v) => dispatch(assemble.actions.setThreshold(v));
-	const wrapperStyle = {width: 400, margin: 50};
+	const setThreshold = (v) => {
+		dispatch(assemble.actions.setThreshold(v));
+		drawPatterns();
+	};
+
 	return (
-		<div style={wrapperStyle}>
-			<p>Slider with custom handle</p>
+		<div className="slider">
+			<p>Pattern threshold</p>
 			<Slider min={0} max={255} defaultValue={127} handle={handle}
 			        onAfterChange={(value) => setThreshold(value)}/>
 		</div>
