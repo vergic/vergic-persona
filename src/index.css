@@ -67,4 +67,6 @@ code {
 .color-box {
     width: 100px;
     height: 100px;
+    text-align: center;
+    color: white;
 }

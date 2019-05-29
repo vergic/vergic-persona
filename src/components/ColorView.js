@@ -1,35 +1,25 @@
 import React from "react";
-import {useDispatch, useSelector, shallowEqual} from 'react-redux'
-import {SketchPicker} from 'react-color'
-import {assemble, updateColor} from '../ducks/assemble'
+import {useSelector, shallowEqual} from 'react-redux'
+import {assemble} from '../ducks/assemble'
 
 
-function ColorView({colorId, pickerOpen, setPickerOpen}) {
-
-	const dispatch = useDispatch();
-	const setColor = (colorId, color) => dispatch(updateColor(colorId, color));
-	const togglePicker = () => {
-		const p = pickerOpen === colorId
-			? ''
-			: colorId;
-
-		setPickerOpen(p);
-	};
+function ColorView({colorId, togglePicker}) {
 
 	const color = useSelector(assemble.selectors.getColors, shallowEqual)[colorId];
 	const style = {
 		backgroundColor: color
 	};
+	const txt = {
+		filled: 'filled',
+		notFilled: 'empty',
+		backgroundColor: 'background'
+	}[colorId];
 
 	return (
 		<div className="">
-			<div className="color-box" style={style} onClick={() => togglePicker()}/>
-			{pickerOpen === colorId
-				? (<SketchPicker
-					color={color}
-					onChangeComplete={(c) => setColor(colorId, c.rgb)}
-				/>)
-				: null}
+			<div className="color-box" style={style} onClick={() => togglePicker(colorId)}>
+				{txt}
+			</div>
 
 		</div>
 	)

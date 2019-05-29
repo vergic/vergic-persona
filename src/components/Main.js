@@ -2,6 +2,7 @@ import React, {useRef, useState, useEffect} from "react";
 import {useDispatch, useSelector, shallowEqual} from 'react-redux'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import {PhotoshopPicker} from 'react-color'
 import ColorView from './ColorView'
 import ImageContainer from './ImageContainer'
 import ThresholdSlider from './ThresholdSlider'
@@ -10,7 +11,8 @@ import {
 	initWithImageData,
 	drawBlocksImage,
 	drawPatternImage,
-	drawPatternImageWithContext
+	drawPatternImageWithContext,
+	updateColor
 } from '../ducks/assemble'
 import {view, restart} from '../ducks/view'
 
@@ -19,10 +21,16 @@ const Main = () => {
 	const dispatch = useDispatch();
 	const init = (imageData) => dispatch(initWithImageData(imageData));
 
-	const [pickerOpen, setPickerOpen] = useState(false);
-	const colorProps = {
-		pickerOpen,
-		setPickerOpen
+	const [pickerOpen, setPickerOpen] = useState('');
+	const color = useSelector(assemble.selectors.getColors, shallowEqual)[pickerOpen] || '';
+	const setColor = (colorId, color) => dispatch(updateColor(colorId, color));
+
+	const togglePicker = (colorId) => {
+		const p = pickerOpen === colorId
+			? ''
+			: colorId;
+
+		setPickerOpen(p);
 	};
 
 	const startOver = () => {
@@ -89,16 +97,25 @@ const Main = () => {
 				<ImageContainer url={blobUrl} id={'orig'} imageLoaded={imageLoaded}/>
 				<Card.Header>Vergic Persona</Card.Header>
 				<Card.Body>
-					<Card.Title>Settings</Card.Title>
+					<Card.Title>Visibility Settings</Card.Title>
 					<Card.Text>
 						Drag slider to modify visibility
 					</Card.Text>
 					<ThresholdSlider/>
+					<Card.Title>Color Settings</Card.Title>
 					<div className="color-section">
-						<ColorView colorId={'backgroundColor'} {...colorProps}/>
-						<ColorView colorId={'filled'} {...colorProps}/>
-						<ColorView colorId={'notFilled'} {...colorProps}/>
+						<ColorView colorId={'backgroundColor'} togglePicker={togglePicker}/>
+						<ColorView colorId={'filled'} togglePicker={togglePicker}/>
+						<ColorView colorId={'notFilled'} togglePicker={togglePicker}/>
 					</div>
+					{pickerOpen !== ''
+						? (<PhotoshopPicker
+							color={color}
+							onAccept={() => togglePicker()}
+							onCancel={() => togglePicker()}
+							onChangeComplete={(c) => setColor(pickerOpen, c.rgb)}
+						/>)
+						: null}
 					{/*<Button variant="primary" onClick={() => drawPatterns()}>Generate</Button>*/}
 				</Card.Body>
 				<Card.Footer>
