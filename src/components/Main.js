@@ -5,7 +5,13 @@ import Card from 'react-bootstrap/Card';
 import ColorView from './ColorView'
 import ImageContainer from './ImageContainer'
 import ThresholdSlider from './ThresholdSlider'
-import {assemble, initWithImageData, drawBlocksImage, drawPatternImage} from '../ducks/assemble'
+import {
+	assemble,
+	initWithImageData,
+	drawBlocksImage,
+	drawPatternImage,
+	drawPatternImageWithContext
+} from '../ducks/assemble'
 import {view, restart} from '../ducks/view'
 
 const Main = () => {
@@ -27,7 +33,7 @@ const Main = () => {
 	useEffect(
 		() => {
 			console.log('draw');
-			drawPatterns();
+			drawPatternsWithContext();
 			return () => console.log('clean');
 		}, [count]);
 
@@ -65,6 +71,12 @@ const Main = () => {
 		const imageData = ctx.getImageData(0, 0, imageWidth, imageHeight);
 		dispatch(drawPatternImage(imageData.data));
 		ctx.putImageData(imageData, 0, 0);
+	};
+
+	const drawPatternsWithContext = () => {
+		const canvas = canvasRef.current;
+		const ctx = canvas.getContext('2d');
+		dispatch(drawPatternImageWithContext(ctx));
 	};
 
 	const blobUrl = useSelector(view.selectors.getBlobUrl, shallowEqual);

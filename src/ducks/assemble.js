@@ -201,7 +201,6 @@ export const initWithImageData = (imageData) => (dispatch, getState) => {
 	dispatch(assemble.actions.initPatterns(patternWidth));
 
 	state = getState().assemble;
-	console.log('patterns', state.patterns)
 
 	const nbrOfColumns = Math.ceil(state.imageWidth / state.patterns[0].width);
 	let columns = getNewColumns(nbrOfColumns, state.imageWidth, state.imageHeight, state.patterns);
@@ -221,6 +220,12 @@ export const drawPatternImage = (imageData) => (dispatch, getState) => {
 	CanvasDraw.drawPatternColumns(state.imageWidth, state.imageHeight, imageData, state.columns, state.patterns, state.colors);
 };
 
+export const drawPatternImageWithContext = (ctx) => (dispatch, getState) => {
+	dispatch(assemble.actions.updateWithThreshold());
+	const state = getState().assemble;
+	CanvasDraw.drawPatternColumnsWithContext(state.imageWidth, state.imageHeight, ctx, state.columns, state.patterns, state.colors);
+};
+
 export const updateColor = (colorId, color) => {
 	const thunk = (dispatch, getState) => {
 		dispatch(assemble.actions.setColor({colorId, color}));
@@ -229,7 +234,7 @@ export const updateColor = (colorId, color) => {
 
 	thunk.meta = {
 		debounce: {
-			time: 3000,
+			time: 100,
 			key: 'updateColor' + colorId
 		}
 	};
@@ -244,7 +249,7 @@ export const updateThreshold = (threshold) => {
 
 	thunk.meta = {
 		debounce: {
-			time: 1000,
+			time: 100,
 			key: 'updateThreshold '
 		}
 	};

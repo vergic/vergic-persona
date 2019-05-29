@@ -33,6 +33,40 @@ const drawPattern = (width, height, imageData, cell, patterns, colors) => {
 	}
 };
 
+
+const drawOnePattern = (pattern, imageData, colors) => {
+	for (let y = 0; y < pattern.height; y++) {
+		for (let x = 0; x < pattern.width; x++) {
+			const dx = x * 4;
+			const dy = y * 4 * pattern.width;
+			const pos = dx + dy;
+			const color = colors[pattern.mask[y][x]];
+			for (let c = 0; c < color.length; c++) {
+				imageData.data[pos + c] = color[c];
+			}
+		}
+	}
+};
+
+const drawPatternColumnsWithContext = (imageWidth, imageHeight, ctx, columns, patterns, colors) => {
+	// create pattern images
+	const {filled, notFilled, backgroundColor} = colors;
+	const patternImages = patterns.map(pattern => {
+		const imageData0 = ctx.createImageData(pattern.width, pattern.height);
+		drawOnePattern(pattern, imageData0, [backgroundColor, notFilled]);
+
+		const imageData1 = ctx.createImageData(pattern.width, pattern.height);
+		drawOnePattern(pattern, imageData1, [backgroundColor, filled]);
+
+		return [imageData0, imageData1]
+	});
+	// blit patterns
+	columns.forEach(column => column.forEach(cell => {
+		const pData = patternImages[cell.patternIndex][cell.filled ? 1 : 0];
+		ctx.putImageData(pData, cell.x0, cell.y0);
+	}));
+};
+
 const drawPatternColumns = (imageWidth, imageHeight, imageData, columns, patterns, colors) => {
 	columns.forEach(column => column.forEach(cell => {
 		drawPattern(imageWidth, imageHeight, imageData, cell, patterns, colors);
@@ -56,6 +90,7 @@ const drawSingleColor = (imageWidth, imageHeight, imageData) => {
 export default {
 	drawColumns,
 	drawSingleColor,
-	drawPatternColumns
+	drawPatternColumns,
+	drawPatternColumnsWithContext
 };
 
