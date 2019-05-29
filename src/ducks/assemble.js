@@ -109,9 +109,18 @@ const setColumns = (state, action) => {
 	state.columns = action.payload;
 };
 
+const setColor = (state, action) => {
+	const {colorId, color: {r, g, b}} = action.payload;
+	state.colors[colorId] = [r, g, b, 255];
+};
+
 const initPatterns = (state, action) => {
 	const patternWidth = action.payload;
 	state.patterns = [pattern.newCirclePattern('circle', patternWidth), pattern.newBarPattern('bar', patternWidth)];
+};
+
+const incrementCount = (state, action) => {
+	state.count++;
 };
 
 const initialState = {
@@ -120,7 +129,14 @@ const initialState = {
 	columns: [],
 	patternWidth: 0,
 	patterns: [],
-	threshold: 127
+	threshold: 127,
+	colors: {
+		filled: [24, 65, 74, 255],
+		notFilled: [54, 170, 192, 255],
+		backgroundColor: [83, 201, 224, 255],
+
+	},
+	count: 0
 };
 
 export const assemble = createSlice({
@@ -134,14 +150,45 @@ export const assemble = createSlice({
 		setThreshold,
 		setColumns,
 		initPatterns,
+		setColor,
+		incrementCount,
 	}
 });
-
+const rgbToHex = function (rgb) {
+	let hex = Number(rgb).toString(16);
+	if (hex.length < 2) {
+		hex = "0" + hex;
+	}
+	return hex;
+};
+const fullColorHex = function (colorArray) {
+	const [r, g, b] = colorArray;
+	const red = rgbToHex(r);
+	const green = rgbToHex(g);
+	const blue = rgbToHex(b);
+	return red + green + blue;
+};
 assemble.selectors = {
 	getImageDimensions: createSelector(
 		['assemble.imageWidth', 'assemble.imageHeight'],
 		(imageWidth, imageHeight) => {
 			return {imageWidth, imageHeight};
+		}
+	),
+	getColors: createSelector(
+		['assemble.colors'],
+		(colors) => {
+			const colorsCopy = {...colors};
+			return Object.keys(colorsCopy).reduce((obj, key) => {
+				obj[key] = '#' + fullColorHex(obj[key]);
+				return obj;
+			}, colorsCopy)
+		}
+	),
+	getCount: createSelector(
+		['assemble.count'],
+		(count) => {
+			return count;
 		}
 	)
 };
@@ -160,6 +207,7 @@ export const initWithImageData = (imageData) => (dispatch, getState) => {
 	let columns = getNewColumns(nbrOfColumns, state.imageWidth, state.imageHeight, state.patterns);
 	columns = getRgbColumns(columns, state.patterns, state.imageWidth, state.imageHeight, imageData);
 	dispatch(assemble.actions.setColumns(columns));
+	dispatch(assemble.actions.incrementCount());
 };
 
 export const drawBlocksImage = (imageData) => (dispatch, getState) => {
@@ -170,6 +218,35 @@ export const drawBlocksImage = (imageData) => (dispatch, getState) => {
 export const drawPatternImage = (imageData) => (dispatch, getState) => {
 	dispatch(assemble.actions.updateWithThreshold());
 	const state = getState().assemble;
-	CanvasDraw.drawPatternColumns(state.imageWidth, state.imageHeight, imageData, state.columns, state.patterns);
+	CanvasDraw.drawPatternColumns(state.imageWidth, state.imageHeight, imageData, state.columns, state.patterns, state.colors);
 };
 
+export const updateColor = (colorId, color) => {
+	const thunk = (dispatch, getState) => {
+		dispatch(assemble.actions.setColor({colorId, color}));
+		dispatch(assemble.actions.incrementCount());
+	};
+
+	thunk.meta = {
+		debounce: {
+			time: 3000,
+			key: 'updateColor' + colorId
+		}
+	};
+	return thunk;
+};
+
+export const updateThreshold = (threshold) => {
+	const thunk = (dispatch, getState) => {
+		dispatch(assemble.actions.setThreshold(threshold));
+		dispatch(assemble.actions.incrementCount());
+	};
+
+	thunk.meta = {
+		debounce: {
+			time: 1000,
+			key: 'updateThreshold '
+		}
+	};
+	return thunk;
+};

@@ -6,7 +6,7 @@ import {useDispatch, useSelector, shallowEqual} from 'react-redux'
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 
-import {assemble} from '../ducks/assemble'
+import {updateThreshold} from '../ducks/assemble'
 
 const Handle = Slider.Handle;
 
@@ -26,11 +26,10 @@ const handle = (props) => {
 };
 
 
-function ThresholdSlider({drawPatterns}) {
+function ThresholdSlider() {
 	const dispatch = useDispatch();
 	const setThreshold = (v) => {
-		dispatch(assemble.actions.setThreshold(v));
-		drawPatterns();
+		dispatch(updateThreshold(v));
 	};
 
 	return (

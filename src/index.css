@@ -58,3 +58,13 @@ code {
     padding: 5px;
     /*border: 1px solid #666;*/
 }
+
+.color-section {
+    display: flex;
+    flex-direction: row;
+}
+
+.color-box {
+    width: 100px;
+    height: 100px;
+}

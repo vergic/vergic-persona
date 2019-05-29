@@ -1,7 +1,8 @@
-import React, {useRef} from "react";
+import React, {useRef, useState, useEffect} from "react";
 import {useDispatch, useSelector, shallowEqual} from 'react-redux'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import ColorView from './ColorView'
 import ImageContainer from './ImageContainer'
 import ThresholdSlider from './ThresholdSlider'
 import {assemble, initWithImageData, drawBlocksImage, drawPatternImage} from '../ducks/assemble'
@@ -12,9 +13,23 @@ const Main = () => {
 	const dispatch = useDispatch();
 	const init = (imageData) => dispatch(initWithImageData(imageData));
 
+	const [pickerOpen, setPickerOpen] = useState(false);
+	const colorProps = {
+		pickerOpen,
+		setPickerOpen
+	};
+
 	const startOver = () => {
 		dispatch(restart());
 	};
+
+	const count = useSelector(assemble.selectors.getCount, shallowEqual);
+	useEffect(
+		() => {
+			console.log('draw');
+			drawPatterns();
+			return () => console.log('clean');
+		}, [count]);
 
 	const imageLoaded = () => {
 		const {imageWidth, imageHeight} = canvasDimensions;
@@ -25,7 +40,6 @@ const Main = () => {
 		drawOriginal();
 		const imageData = ctx.getImageData(0, 0, imageWidth, imageHeight);
 		init(imageData.data);
-		drawPatterns();
 	};
 
 	const drawOriginal = () => {
@@ -61,13 +75,18 @@ const Main = () => {
 		<div className="main">
 			<Card className="card" bg="success" style={{width: '28rem'}}>
 				<ImageContainer url={blobUrl} id={'orig'} imageLoaded={imageLoaded}/>
-				<Card.Header>Vergic Person</Card.Header>
+				<Card.Header>Vergic Persona</Card.Header>
 				<Card.Body>
 					<Card.Title>Settings</Card.Title>
 					<Card.Text>
 						Drag slider to modify visibility
 					</Card.Text>
-					<ThresholdSlider drawPatterns={drawPatterns}/>
+					<ThresholdSlider/>
+					<div className="color-section">
+						<ColorView colorId={'backgroundColor'} {...colorProps}/>
+						<ColorView colorId={'filled'} {...colorProps}/>
+						<ColorView colorId={'notFilled'} {...colorProps}/>
+					</div>
 					{/*<Button variant="primary" onClick={() => drawPatterns()}>Generate</Button>*/}
 				</Card.Body>
 				<Card.Footer>
@@ -78,8 +97,8 @@ const Main = () => {
 				<canvas
 					className="preview-image"
 					ref={canvasRef}
-					width={200}
-					height={200}
+					width={600}
+					height={600}
 				/>
 			</div>
 		</div>

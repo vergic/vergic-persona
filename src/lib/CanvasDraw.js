@@ -33,13 +33,8 @@ const drawPattern = (width, height, imageData, cell, patterns, colors) => {
 	}
 };
 
-const drawPatternColumns = (imageWidth, imageHeight, imageData, columns, patterns) => {
+const drawPatternColumns = (imageWidth, imageHeight, imageData, columns, patterns, colors) => {
 	columns.forEach(column => column.forEach(cell => {
-		const colors = {
-			filled: [24, 65, 74, 255],
-			notFilled: [54, 170, 192, 255],
-			backgroundColor: [83, 201, 224, 255],
-		};
 		drawPattern(imageWidth, imageHeight, imageData, cell, patterns, colors);
 	}));
 };
