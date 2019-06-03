@@ -4,7 +4,7 @@
 ### Installation
 Clone the repository
 ```
-git clone https://github.com/vergic/vngage-desktop-plugin-mini.git
+git clone https://github.com/vergic/vergic-persona.git
 ```
 
 ### Run with yarn
@@ -18,3 +18,5 @@ npm install
 npm run start
 ```
 
+### Saving images
+Right click image and save
