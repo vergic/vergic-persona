@@ -1,6 +1,20 @@
 ### Converts an image to a vergic persona
 
-download and run
 
-yarn
-yarn start
+### Installation
+Clone the repository
+```
+git clone https://github.com/vergic/vngage-desktop-plugin-mini.git
+```
+
+### Run with yarn
+```
+yarn && yarn start
+```
+
+### Run with npm
+```
+npm install
+npm run start
+```
+
