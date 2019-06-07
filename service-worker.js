@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/vergic-persona/precache-manifest.311d281fb8ea012a77061df54822c112.js"
+  "/vergic-persona/precache-manifest.7aa60891d14006bba5108938a42603ab.js"
 );
 
 self.addEventListener('message', (event) => {

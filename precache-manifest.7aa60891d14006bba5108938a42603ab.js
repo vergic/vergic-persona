@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "10935d2cc89844b792f762080b2c759c",
+    "revision": "3e4def2790f500cf2baee24cb048b559",
     "url": "/vergic-persona/index.html"
   },
   {
@@ -8,16 +8,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/vergic-persona/static/css/2.20d67eb1.chunk.css"
   },
   {
-    "revision": "8124074b6ebf88f2c72a",
-    "url": "/vergic-persona/static/css/main.a7127ebe.chunk.css"
+    "revision": "4b2eceb8208dd55eb67c",
+    "url": "/vergic-persona/static/css/main.17bfbbf5.chunk.css"
   },
   {
     "revision": "e3b52364a58e0a1467aa",
     "url": "/vergic-persona/static/js/2.744fea6a.chunk.js"
   },
   {
-    "revision": "8124074b6ebf88f2c72a",
-    "url": "/vergic-persona/static/js/main.7d92520e.chunk.js"
+    "revision": "4b2eceb8208dd55eb67c",
+    "url": "/vergic-persona/static/js/main.fc37395a.chunk.js"
   },
   {
     "revision": "f34a39f95b8ca8287083",
