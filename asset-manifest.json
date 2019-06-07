@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/vergic-persona/static/css/main.a7127ebe.chunk.css",
-    "main.js": "/vergic-persona/static/js/main.7d92520e.chunk.js",
-    "main.js.map": "/vergic-persona/static/js/main.7d92520e.chunk.js.map",
-    "runtime~main.js": "/vergic-persona/static/js/runtime~main.46a062a3.js",
-    "runtime~main.js.map": "/vergic-persona/static/js/runtime~main.46a062a3.js.map",
-    "static/css/2.20d67eb1.chunk.css": "/vergic-persona/static/css/2.20d67eb1.chunk.css",
-    "static/js/2.744fea6a.chunk.js": "/vergic-persona/static/js/2.744fea6a.chunk.js",
-    "static/js/2.744fea6a.chunk.js.map": "/vergic-persona/static/js/2.744fea6a.chunk.js.map",
-    "index.html": "/vergic-persona/index.html",
-    "precache-manifest.311d281fb8ea012a77061df54822c112.js": "/vergic-persona/precache-manifest.311d281fb8ea012a77061df54822c112.js",
-    "service-worker.js": "/vergic-persona/service-worker.js",
-    "static/css/2.20d67eb1.chunk.css.map": "/vergic-persona/static/css/2.20d67eb1.chunk.css.map",
-    "static/css/main.a7127ebe.chunk.css.map": "/vergic-persona/static/css/main.a7127ebe.chunk.css.map"
+    "main.css": "/vergic-persona/build/static/css/main.a7127ebe.chunk.css",
+    "main.js": "/vergic-persona/build/static/js/main.78322e11.chunk.js",
+    "main.js.map": "/vergic-persona/build/static/js/main.78322e11.chunk.js.map",
+    "runtime~main.js": "/vergic-persona/build/static/js/runtime~main.726f015f.js",
+    "runtime~main.js.map": "/vergic-persona/build/static/js/runtime~main.726f015f.js.map",
+    "static/css/2.20d67eb1.chunk.css": "/vergic-persona/build/static/css/2.20d67eb1.chunk.css",
+    "static/js/2.744fea6a.chunk.js": "/vergic-persona/build/static/js/2.744fea6a.chunk.js",
+    "static/js/2.744fea6a.chunk.js.map": "/vergic-persona/build/static/js/2.744fea6a.chunk.js.map",
+    "index.html": "/vergic-persona/build/index.html",
+    "precache-manifest.1e0d1f44a1a1beb408cb1fccb33c0c84.js": "/vergic-persona/build/precache-manifest.1e0d1f44a1a1beb408cb1fccb33c0c84.js",
+    "service-worker.js": "/vergic-persona/build/service-worker.js",
+    "static/css/2.20d67eb1.chunk.css.map": "/vergic-persona/build/static/css/2.20d67eb1.chunk.css.map",
+    "static/css/main.a7127ebe.chunk.css.map": "/vergic-persona/build/static/css/main.a7127ebe.chunk.css.map"
   }
 }
