@@ -2,7 +2,7 @@
   "name": "pattern-image",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://vergic.github.io/vergic-persona/build",
+  "homepage": "https://vergic.github.io/vergic-persona/",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "gh-pages": "^2.0.1",
