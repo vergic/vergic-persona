@@ -1,6 +1,11 @@
 const outerDiameter = 25;
 const innerDiameter = 12;//13;
 const diameterRatio = innerDiameter / outerDiameter;
+const barWidth = 22.7;
+const barHeight = 5.5;
+const barPadding = 2.8;
+const verticalPaddingRatio = barPadding / barHeight;
+const barRatio = barHeight / barWidth;
 
 const patternTemplate = {
 	id: 'id',
@@ -10,8 +15,8 @@ const patternTemplate = {
 	mask: [],
 };
 
-const emptyRow = (size) => {
-	return Array(size).fill(0);
+const emptyRow = (size, value = 0) => {
+	return Array(size).fill(value);
 };
 
 // Vergic circle math function
@@ -24,41 +29,45 @@ const circleCalc = (x, y, size) => {
 	return dist > innerRadius && dist < outerRadius ? 1 : 0;
 };
 
-// Vergic bar math function
-const barCalc = (x, y, w, h, b) => {
-	return (x < b || y < b || x > w - b || y > h - b) ? 0 : 1;
-};
-
-// Vergic bar math function
-const _barCalc = (x, y, w, h) => {
-	return (x === 0 || y === 0 || x === w - 1 || y === h - 1) ? 0 : 1;
+const addPadding = (mask, width, horizPadding, vertPadding) => {
+	vertPadding = Array(vertPadding).fill([]).map(empty => emptyRow(width));
+	horizPadding = Array(horizPadding).fill(0);
+	return [...mask.map(row => row.concat(horizPadding)), ...vertPadding];
 };
 
 // Create Vergic circle pattern
-const newCirclePattern = (id, size) => {
-	const mask = Array(size).fill([]).map(empty => emptyRow(size))
-		.map((row, y) => row.map((val, x) => circleCalc(x, y, size - 1)));
+const newCirclePattern = (id, width, horizPadding = 2) => {
+	const widthWithoutPadding = width - horizPadding;
+	const vertSize = Math.round(widthWithoutPadding * barRatio);
+	const vertPadding = Math.round(vertSize * verticalPaddingRatio);
+
+	const mask = Array(widthWithoutPadding).fill([]).map(empty => emptyRow(widthWithoutPadding))
+		.map((row, y) => row.map((val, x) => circleCalc(x, y, widthWithoutPadding)));
+
 	return {
 		...patternTemplate,
 		id,
-		width: size,
-		height: size + 2,
-		mask: [emptyRow(size), ...mask, emptyRow(size)]
+		width,
+		height: widthWithoutPadding + vertPadding,
+		mask: addPadding(mask, width, horizPadding, vertPadding)
 	};
 };
 
 // Create Vergic bar pattern
-const newBarPattern = (id, size) => {
-	const height = outerDiameter - innerDiameter;
-	const mask = Array(height).fill([]).map(empty => emptyRow(size))
-		.map((row, y) => row.map((val, x) => barCalc(x, y, size, height, 2)));
+const newBarPattern = (id, width, horizPadding = 2) => {
+	const widthWithoutPadding = width - horizPadding;
+	const vertSize = Math.round(widthWithoutPadding * barRatio);
+	const vertPadding = Math.round(vertSize * verticalPaddingRatio);
+	const horizSize = width - horizPadding;
+
+	const mask = Array(vertSize).fill([]).map(empty => emptyRow(horizSize, 1));
 
 	return {
 		...patternTemplate,
 		id,
-		width: size,
-		height: height + 2,
-		mask: [emptyRow(size), ...mask, emptyRow(size)]
+		width,
+		height: Math.round(vertSize + vertPadding),
+		mask: addPadding(mask, width, horizPadding, vertPadding)
 	};
 };
 

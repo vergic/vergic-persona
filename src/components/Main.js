@@ -126,8 +126,8 @@ const Main = () => {
 				<canvas
 					className="preview-image"
 					ref={canvasRef}
-					width={600}
-					height={600}
+					width={800}
+					height={800}
 				/>
 			</div>
 		</div>

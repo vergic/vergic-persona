@@ -31,8 +31,8 @@ code {
 
 .generated-image-container {
     /*height: 600px;*/
-    max-height: 600px;
-    max-width: 600px;
+    max-height: 800px;
+    max-width: 800px;
 }
 
 .preview-image {
