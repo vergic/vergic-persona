@@ -5,6 +5,8 @@ import {createLogger} from 'redux-logger'
 import createDebounce from 'redux-debounced';
 import {assemble} from './ducks/assemble'
 import {view} from './ducks/view'
+import createAnalyticsMiddleware from './lib/createAnalyticsMiddleware'
+import actionMap from './lib/actionMap'
 
 const initialState = {};
 // patterns: [],
@@ -37,7 +39,7 @@ const reducer = combineReducers({
 });
 
 // const middleware = [thunkMiddleware, logger, createDebounce, ...getDefaultMiddleware()];
-const middleware = [createDebounce(), thunkMiddleware, logger, ...getDefaultMiddleware()];
+const middleware = [createDebounce(), thunkMiddleware, logger, createAnalyticsMiddleware(window.dataLayer, actionMap), ...getDefaultMiddleware()];
 const configureAppStore = (preloadedState) => {
 	const store = configureStore({
 		reducer,
