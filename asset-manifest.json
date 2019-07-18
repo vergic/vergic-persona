@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/vergic-persona/static/css/main.17bfbbf5.chunk.css",
-    "main.js": "/vergic-persona/static/js/main.8bb77e63.chunk.js",
-    "main.js.map": "/vergic-persona/static/js/main.8bb77e63.chunk.js.map",
+    "main.js": "/vergic-persona/static/js/main.fff3d5c9.chunk.js",
+    "main.js.map": "/vergic-persona/static/js/main.fff3d5c9.chunk.js.map",
     "runtime~main.js": "/vergic-persona/static/js/runtime~main.46a062a3.js",
     "runtime~main.js.map": "/vergic-persona/static/js/runtime~main.46a062a3.js.map",
     "static/css/2.20d67eb1.chunk.css": "/vergic-persona/static/css/2.20d67eb1.chunk.css",
-    "static/js/2.744fea6a.chunk.js": "/vergic-persona/static/js/2.744fea6a.chunk.js",
-    "static/js/2.744fea6a.chunk.js.map": "/vergic-persona/static/js/2.744fea6a.chunk.js.map",
+    "static/js/2.84edfc01.chunk.js": "/vergic-persona/static/js/2.84edfc01.chunk.js",
+    "static/js/2.84edfc01.chunk.js.map": "/vergic-persona/static/js/2.84edfc01.chunk.js.map",
     "index.html": "/vergic-persona/index.html",
-    "precache-manifest.dae0c3fdae0045d2ef1717c0b3a7a0ef.js": "/vergic-persona/precache-manifest.dae0c3fdae0045d2ef1717c0b3a7a0ef.js",
+    "precache-manifest.29c5b17adb266916d1a2f80a42db6dc1.js": "/vergic-persona/precache-manifest.29c5b17adb266916d1a2f80a42db6dc1.js",
     "service-worker.js": "/vergic-persona/service-worker.js",
     "static/css/2.20d67eb1.chunk.css.map": "/vergic-persona/static/css/2.20d67eb1.chunk.css.map",
     "static/css/main.17bfbbf5.chunk.css.map": "/vergic-persona/static/css/main.17bfbbf5.chunk.css.map"
