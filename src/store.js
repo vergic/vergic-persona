@@ -5,25 +5,13 @@ import {createLogger} from 'redux-logger'
 import createDebounce from 'redux-debounced';
 import {assemble} from './ducks/assemble'
 import {view} from './ducks/view'
-import createAnalyticsMiddleware from './lib/createAnalyticsMiddleware'
-import actionMap from './lib/actionMap'
+// import createAnalyticsMiddleware from './lib/createAnalyticsMiddleware'
+import GoogleTagManager from '@redux-beacon/google-tag-manager';
+import { createMiddleware } from 'redux-beacon';
+// import actionMap from './lib/actionMap'
+import eventMap from './lib/eventMap'
 
 const initialState = {};
-// patterns: [],
-// columns: [],
-// };
-
-
-const logger2 = ({getState}) => {
-	return (next) => (action) => {
-
-		console.log('logger', action);
-		const returnValue = next(action);
-		const nextState = getState();
-
-		return returnValue
-	}
-};
 
 
 const logger = createLogger({
@@ -38,8 +26,12 @@ const reducer = combineReducers({
 	view: view.reducer
 });
 
+const gtm = GoogleTagManager();
+const gtmMiddleware = createMiddleware(eventMap, gtm);
+
+
 // const middleware = [thunkMiddleware, logger, createDebounce, ...getDefaultMiddleware()];
-const middleware = [createDebounce(), thunkMiddleware, logger, createAnalyticsMiddleware(window.dataLayer || [], actionMap), ...getDefaultMiddleware()];
+const middleware = [createDebounce(), thunkMiddleware, logger, gtmMiddleware, ...getDefaultMiddleware()];
 const configureAppStore = (preloadedState) => {
 	const store = configureStore({
 		reducer,
