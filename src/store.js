@@ -39,7 +39,7 @@ const reducer = combineReducers({
 });
 
 // const middleware = [thunkMiddleware, logger, createDebounce, ...getDefaultMiddleware()];
-const middleware = [createDebounce(), thunkMiddleware, logger, createAnalyticsMiddleware(window.dataLayer, actionMap), ...getDefaultMiddleware()];
+const middleware = [createDebounce(), thunkMiddleware, logger, createAnalyticsMiddleware(window.dataLayer || [], actionMap), ...getDefaultMiddleware()];
 const configureAppStore = (preloadedState) => {
 	const store = configureStore({
 		reducer,
